@@ -7,8 +7,6 @@ var questionEl = document.querySelector("#Question");
 // var buttonContainer = document.querySelector(".answers-choices");
 // var button = document.querySelectorAll("button");
 
-var currentQuestion = {};
-
 var questions = [
   {
     question: "What is 10/2?",
@@ -21,7 +19,7 @@ var questions = [
     question: "What is 20/2?",
     choice1: "3",
     choice2: "10",
-    choice3: "115",
+    choice3: "100",
     answer: 2,
   },
   {
@@ -33,8 +31,11 @@ var questions = [
   },
 ];
 
+var x = 0;
+var currentQuestion = {};
 var availableQuestions = [...questions];
-currentQuestion = availableQuestions[0];
+currentQuestion = availableQuestions[x];
+var score = 0;
 
 function timer() {
   quiz();
@@ -51,22 +52,63 @@ function timer() {
 }
 
 function quiz() {
+  startQuiz();
+  showChoices();
+
+  // x++;
+  // choices.forEach((choice) => {
+  //   var number = choice.dataset["number"];
+  //   choice.innerText = currentQuestion["choice" + number];
+  //   choice.addEventListener("click", selectedAnswer);
+  //   function selectedAnswer() {
+  //     var answer = currentQuestion["answer"];
+  //     if (choice.innerText === currentQuestion['choice' + answer]) {
+  //       score = +10;
+  //       console.log(score);
+  //       choices.forEach((choice) => {
+  //         currentQuestion = availableQuestions[x];
+  //         var number = choice.dataset["number"];
+  //         choice.innerText = currentQuestion["choice" + number];
+  //       });
+  //     }
+  //   }
+  // });
+}
+
+function startQuiz() {
   answerChoicesEl.hidden = false;
   startBtn.hidden = true;
   instructions.hidden = true;
-  questionEl.textContent = questions[0].question;
-  choices.forEach((choice) => {
-    var number = choice.dataset['number'];
-    choice.innerText = currentQuestion['choice' + number];
-	choice.addEventListener("click", selectedAnswer)
-	function selectedAnswer() {
-		  var answer = currentQuestion['answer'];
-		  if(choice.innerText===currentQuestion["choice" + answer]){
-			window.alert("It works!!")
-		  };
-	}
-  });
- 
+  questionEl.textContent = currentQuestion["question"];
+}
+
+
+
+function showChoices() {
+
+for (let choice of choices) {
+  var number = choice.dataset["number"];
+  choice.innerText = currentQuestion["choice" + number];
+}
+
+
+  // choices.forEach((choice) => {
+  //   var number = choice.dataset["number"];
+  //   choice.innerText = currentQuestion["choice" + number];
+    // choice.addEventListener("click", selectedAnswer);
+    // function selectedAnswer() {
+    //   var answer = currentQuestion["answer"];
+    //   if (choice.innerText === currentQuestion["choice" + answer]) {
+    //     score = +10;
+    //     console.log(score);
+    //     choices.forEach((choice) => {
+    //       currentQuestion = availableQuestions[x];
+    //       var number = choice.dataset["number"];
+    //       choice.innerText = currentQuestion["choice" + number];
+    //     });
+    //   }
+    // }
+  // });
 }
 
 startBtn.addEventListener("click", timer);
@@ -76,7 +118,5 @@ startBtn.addEventListener("click", timer);
 // 		if (choice.innerText === currentQuestion[ 'choice' + 'answer'] ) {
 // 			window.alert("It works!!")
 // 		}
-	
-	 
-    
+
 // }
