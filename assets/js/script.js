@@ -1,6 +1,6 @@
 var startBtn = document.querySelector("#start-btn");
 var timerEl = document.getElementById("timer");
-var answerChoicesContainer = document.querySelector(".choices");
+var answerChoicesEl = document.querySelector(".choices");
 var choices = Array.from(document.querySelectorAll(".choice"));
 var instructions = document.querySelector("#instructions");
 var questionEl = document.querySelector("#Question");
@@ -51,23 +51,32 @@ function timer() {
 }
 
 function quiz() {
-  answerChoicesContainer.hidden = false;
+  answerChoicesEl.hidden = false;
   startBtn.hidden = true;
   instructions.hidden = true;
   questionEl.textContent = questions[0].question;
   choices.forEach((choice) => {
     var number = choice.dataset['number'];
     choice.innerText = currentQuestion['choice' + number];
+	choice.addEventListener("click", selectedAnswer)
+	function selectedAnswer() {
+		  var answer = currentQuestion['answer'];
+		  if(choice.innerText===currentQuestion["choice" + answer]){
+			window.alert("It works!!")
+		  };
+	}
   });
-  choices.addEventListener('click', selectedAnswer)
-  function selectedAnswer() {
-	  if (choices.innerText===currentQuestion[answer]){
-		  
-	  }
-
-  };
-
-  
+ 
 }
 
 startBtn.addEventListener("click", timer);
+
+// choices.onclick = () => {
+// 	choices.forEach((choice) => {
+// 		if (choice.innerText === currentQuestion[ 'choice' + 'answer'] ) {
+// 			window.alert("It works!!")
+// 		}
+	
+	 
+    
+// }
