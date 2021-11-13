@@ -54,7 +54,7 @@ function timer() {
 
 function quiz() {
   startQuiz();
-  showChoices();
+  showChoices(currentQuestion);
 
   // x++;
   // choices.forEach((choice) => {
@@ -83,7 +83,8 @@ function startQuiz() {
   questionEl.textContent = currentQuestion["question"];
 }
 
-function showChoices() {
+function showChoices(currentQuestion) {
+  // console.log(currentQuestion)
   for (let choice of choices) {
     var number = choice.dataset["number"];
     choice.innerText = currentQuestion["choice" + number];
@@ -118,10 +119,12 @@ function userAnswer() {
       if (choice.innerText === currentQuestion["choice" + answer]) {
         score = +10;
         console.log(score);
-        next();
       } else if (choice.innerText !== currentQuestion["choice" + answer]) {
-        timeLeft = timeLeft - 10;
+        timeLeft = timeLeft - 5;
       }
+
+      console.log(timeLeft);
+      next();
     }
   }
 }
@@ -131,7 +134,9 @@ function next() {
   var currentQuestion = {};
   var availableQuestions = [...questions];
   currentQuestion = availableQuestions[x];
+  // console.log(currentQuestion);
   questionEl.textContent = currentQuestion["question"];
+  showChoices(currentQuestion);
 }
 
 startBtn.addEventListener("click", timer);
