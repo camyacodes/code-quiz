@@ -31,15 +31,16 @@ var questions = [
   },
 ];
 
-var x = 0;
+let x = 0;
 var currentQuestion = {};
 var availableQuestions = [...questions];
 currentQuestion = availableQuestions[x];
 var score = 0;
 
+var timeLeft = 75;
+
 function timer() {
   quiz();
-  var timeLeft = 75;
   var timeInterval = setInterval(function () {
     if (timeLeft > 0) {
       timerEl.textContent = "Time: " + timeLeft;
@@ -82,33 +83,55 @@ function startQuiz() {
   questionEl.textContent = currentQuestion["question"];
 }
 
-
-
 function showChoices() {
+  for (let choice of choices) {
+    var number = choice.dataset["number"];
+    choice.innerText = currentQuestion["choice" + number];
+  }
 
-for (let choice of choices) {
-  var number = choice.dataset["number"];
-  choice.innerText = currentQuestion["choice" + number];
-}
-
+  userAnswer();
 
   // choices.forEach((choice) => {
   //   var number = choice.dataset["number"];
   //   choice.innerText = currentQuestion["choice" + number];
-    // choice.addEventListener("click", selectedAnswer);
-    // function selectedAnswer() {
-    //   var answer = currentQuestion["answer"];
-    //   if (choice.innerText === currentQuestion["choice" + answer]) {
-    //     score = +10;
-    //     console.log(score);
-    //     choices.forEach((choice) => {
-    //       currentQuestion = availableQuestions[x];
-    //       var number = choice.dataset["number"];
-    //       choice.innerText = currentQuestion["choice" + number];
-    //     });
-    //   }
-    // }
+  // choice.addEventListener("click", selectedAnswer);
+  // function selectedAnswer() {
+  //   var answer = currentQuestion["answer"];
+  //   if (choice.innerText === currentQuestion["choice" + answer]) {
+  //     score = +10;
+  //     console.log(score);
+  //     choices.forEach((choice) => {
+  //       currentQuestion = availableQuestions[x];
+  //       var number = choice.dataset["number"];
+  //       choice.innerText = currentQuestion["choice" + number];
+  //     });
+  //   }
+  // }
   // });
+}
+
+function userAnswer() {
+  for (let choice of choices) {
+    choice.addEventListener("click", selectedAnswer);
+    function selectedAnswer() {
+      var answer = currentQuestion["answer"];
+      if (choice.innerText === currentQuestion["choice" + answer]) {
+        score = +10;
+        console.log(score);
+        next();
+      } else if (choice.innerText !== currentQuestion["choice" + answer]) {
+        timeLeft = timeLeft - 10;
+      }
+    }
+  }
+}
+
+function next() {
+  x++;
+  var currentQuestion = {};
+  var availableQuestions = [...questions];
+  currentQuestion = availableQuestions[x];
+  questionEl.textContent = currentQuestion["question"];
 }
 
 startBtn.addEventListener("click", timer);
