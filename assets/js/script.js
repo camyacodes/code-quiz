@@ -1,42 +1,36 @@
-// var startBtn = document.querySelector("#start-btn");
-// var timerEl = document.getElementById("timer");
-// var answerChoicesEl = document.querySelector(".choices");
-// var choices = Array.from(document.querySelectorAll(".choice"));
-// var instructions = document.querySelector("#instructions");
-// var questionEl = document.querySelector("#Question");
-// // var buttonContainer = document.querySelector(".answers-choices");
-// // var button = document.querySelectorAll("button");
 
 var questions = [
   {
     question: "What is 10/2?",
-    options: ["3", "5", "115"],
+    options: ["3", "5", "115", "0"],
     answer: 0,
   },
   {
     question: "What is 20/2?",
-    options: ["3", "5", "115"],
+    options: ["3", "5", "115", "0"],
     answer: 0,
   },
   {
     question: "What is 10/1?",
-    options: ["3", "5", "115"],
+    options: ["3", "5", "115", "0"],
     answer: 0,
   },
   {
     question: "What is 3/1?",
-    options: ["3", "5", "115"],
+    options: ["3", "5", "115", "0"],
     answer: 0,
   },
 ];
 
-var app = {
+var timeLeft = 75;
 
+var app = {
+  //this is the starting function that sets the variables and order of the other functions
   start: function () {
     //set first question and score to 0
     this.currPosition = 0;
     this.score = 0;
-    
+    //target start button in html
     var startBtn = document.getElementById("start-btn");
     startBtn.addEventListener("click", () => {
       // when the start button is clicked, hide the instructions and start button
@@ -60,8 +54,8 @@ var app = {
   },
 
     //defining timer function
-    timer: function () {
-      var timeLeft = 75;
+    timer:  function () {
+      
       var timerEl = document.getElementById("timer");
       var timeInterval = setInterval(function () {
         if (timeLeft > 0) {
@@ -73,7 +67,7 @@ var app = {
         }
       }, 1000);
     },
-
+//function that dynamicall changes html to show question on the webpage
   showQuestion: function (q) {
     var questionEl = document.getElementById("Question");
     questionEl.textContent = q.question;
@@ -81,6 +75,15 @@ var app = {
     choices.forEach(function(element,index){
       element.textContent = q.options[index];
     })
+  },
+  checkAnswer: function(userAnswer){
+    var currentQuestion = questions[this.currPosition];
+    if (currentQuestion.answer == userAnswer) {
+      this.score += 1;
+      console.log(this.score)
+    } else {
+      timeLeft -= 10;
+    }
   },
 };
 app.start();
