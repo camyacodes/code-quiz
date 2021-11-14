@@ -1,226 +1,288 @@
-var startBtn = document.querySelector("#start-btn");
-var timerEl = document.getElementById("timer");
-var answerChoicesEl = document.querySelector(".choices");
-var choices = Array.from(document.querySelectorAll(".choice"));
-var instructions = document.querySelector("#instructions");
-var questionEl = document.querySelector("#Question");
-// var buttonContainer = document.querySelector(".answers-choices");
-// var button = document.querySelectorAll("button");
+// var startBtn = document.querySelector("#start-btn");
+// var timerEl = document.getElementById("timer");
+// var answerChoicesEl = document.querySelector(".choices");
+// var choices = Array.from(document.querySelectorAll(".choice"));
+// var instructions = document.querySelector("#instructions");
+// var questionEl = document.querySelector("#Question");
+// // var buttonContainer = document.querySelector(".answers-choices");
+// // var button = document.querySelectorAll("button");
 
 var questions = [
   {
     question: "What is 10/2?",
-    choice1: "3",
-    choice2: "5",
-    choice3: "115",
-    answer: 1,
+    options: ["3", "5", "115"],
+    answer: 0,
   },
   {
     question: "What is 20/2?",
-    choice1: "3",
-    choice2: "10",
-    choice3: "100",
-    answer: 1,
+    options: ["3", "5", "115"],
+    answer: 0,
   },
   {
     question: "What is 10/1?",
-    choice1: "10",
-    choice2: "5",
-    choice3: "115",
-    answer: 1,
+    options: ["3", "5", "115"],
+    answer: 0,
   },
   {
     question: "What is 3/1?",
-    choice1: "58",
-    choice2: "84",
-    choice3: "199",
-    answer: 1,
+    options: ["3", "5", "115"],
+    answer: 0,
   },
 ];
 
-let x = 0;
-var currentQuestion = {};
-var availableQuestions = [...questions];
-currentQuestion = availableQuestions[x];
-var score = 0;
+var app = {
 
-var initialTime = 75;
-var timeLeft = initialTime;
+  start: function () {
+    //set first question and score to 0
+    this.currPosition = 0;
+    this.score = 0;
+    
+    var startBtn = document.getElementById("start-btn");
+    startBtn.addEventListener("click", () => {
+      // when the start button is clicked, hide the instructions and start button
+      var startPg = document.getElementById("startPage");
+      startPg.hidden = true;
+      //start the timer
+      this.timer();
+    // show first question
+    this.showQuestion(questions[this.currPosition])
+    });
 
-function stopTimer() {
-  clearInterval(timeInterval);
-}
 
-function timeInterval() {
-  if (timeLeft > 0) {
-    timerEl.textContent = "Time: " + timeLeft;
-    timeLeft--;
-  } else {
-    timerEl.textContent = "0";
-    stopTimer();
-  }
-}
+    //get choices
+    var choices = document.querySelectorAll(".answerChoice");
+    //check if the choice that's clicked is the right answer
+    choices.forEach((element, index) => {
+      element.addEventListener("click", () => {
+        this.checkAnswer(index);
+      });
+    });
+  },
 
-function timer() {
-  setInterval(timeInterval, 1000);
-  quiz();
+    //defining timer function
+    timer: function () {
+      var timeLeft = 75;
+      var timerEl = document.getElementById("timer");
+      var timeInterval = setInterval(function () {
+        if (timeLeft > 0) {
+          timerEl.textContent = "Time: " + timeLeft;
+          timeLeft--;
+        } else {
+          timerEl.textContent = "0";
+          clearInterval(timeInterval);
+        }
+      }, 1000);
+    },
 
-  // var timeInterval = setInterval(function () {
-  //   if (timeLeft > 0) {
-  //     timerEl.textContent = "Time: " + timeLeft;
-  //     timeLeft = timeLeft - 1;
-  //   } else {
-  //     timerEl.textContent = "0";
-  //     clearInterval(timeInterval);
-  //   }
-  // }, 1000);
-}
+  showQuestion: function (q) {
+    var questionEl = document.getElementById("Question");
+    questionEl.textContent = q.question;
+    var choices = document.querySelectorAll(".answerChoice");
+    choices.forEach(function(element,index){
+      element.textContent = q.options[index];
+    })
+  },
+};
+app.start();
+// let x = 0;
+// var currentQuestion = {};
+// var availableQuestions = [...questions];
+// currentQuestion = availableQuestions[x];
+// var score = 0;
 
-function quiz() {
-  startQuiz(currentQuestion);
-  showChoices(currentQuestion);
+// var initialTime = 75;
+// var timeLeft = initialTime;
 
-  // x++;
-  // choices.forEach((choice) => {
-  //   var number = choice.dataset["number"];
-  //   choice.innerText = currentQuestion["choice" + number];
-  //   choice.addE                     ventListener("click", selectedAnswer);
-  //   function selectedAnswer() {
-  //     var answer = currentQuestion["answer"];
-  //     if (choice.innerText === currentQuestion['choice' + answer]) {
-  //       score = +10;
-  //       console.log(score);
-  //       choices.forEach((choice) => {
-  //         currentQuestion = availableQuestions[x];
-  //         var number = choice.dataset["number"];
-  //         choice.innerText = currentQuestion["choice" + number];
-  //       });
-  //     }
-  //   }
-  // });
-}
+// function stopTimer() {
+//   clearInterval(timeInterval);
+// }
 
-function startQuiz(currentQuestion) {
-  answerChoicesEl.hidden = false;
-  startBtn.hidden = true;
-  instructions.hidden = true;
-  questionEl.textContent = currentQuestion["question"];
-}
+// function timeInterval() {
+//   if (timeLeft > 0) {
+//     timerEl.textContent = "Time: " + timeLeft;
+//     timeLeft--;
+//   } else {
+//     timerEl.textContent = "0";
+//     stopTimer();
+//   }
+// }
 
-function selectedAnswer() {
-  var answer = currentQuestion["answer"];
-  if (this.innerText === currentQuestion["choice" + answer]) {
-    score++;
-    console.log(score);
-    next();
-  } else if (this.innerText !== currentQuestion["choice" + answer]) {
-  console.log('Time Left before penalizing', timeLeft);
-  timeLeft += 1000;
-  console.log('Time Left after penalizing', timeLeft);
-    next();
-  }
-}
-function showChoices(currentQuestion) {
-  console.log(currentQuestion);
-  for (let choice of choices) {
-    var number = choice.dataset["number"];
-    choice.innerText = currentQuestion["choice" + number];
-    choice.addEventListener("click", selectedAnswer);
-   
-    // choices.forEach((choice) => {
-    //   var number = choice.dataset["number"];
-    //   choice.innerText = currentQuestion["choice" + number];
-    // choice.addEventListener("click", selectedAnswer);
-    // function selectedAnswer() {
-    //   var answer = currentQuestion["answer"];
-    //   if (choice.innerText === currentQuestion["choice" + answer]) {
-    //     score = +10;
-    //     console.log(score);
-    //     choices.forEach((choice) => {
-    //       currentQuestion = availableQuestions[x];
-    //       var number = choice.dataset["number"];
-    //       choice.innerText = currentQuestion["choice" + number];
-    //     });
-    //   }
-    // }
-    // });
-  }
-}
+// function timer() {
+//   setInterval(timeInterval, 1000);
+//   quiz();
 
+// var timeInterval = setInterval(function () {
+//   if (timeLeft > 0) {
+//     timerEl.textContent = "Time: " + timeLeft;
+//     timeLeft = timeLeft - 1;
+//   } else {
+//     timerEl.textContent = "0";
+//     clearInterval(timeInterval);
+//   }
+// }, 1000);
+// }
+
+// function quiz() {
+//   startQuiz(currentQuestion);
+//   showChoices(currentQuestion);
+
+//   // x++;
+//   // choices.forEach((choice) => {
+//   //   var number = choice.dataset["number"];
+//   //   choice.innerText = currentQuestion["choice" + number];
+//   //   choice.addE                     ventListener("click", selectedAnswer);
+//   //   function selectedAnswer() {
+//   //     var answer = currentQuestion["answer"];
+//   //     if (choice.innerText === currentQuestion['choice' + answer]) {
+//   //       score = +10;
+//   //       console.log(score);
+//   //       choices.forEach((choice) => {
+//   //         currentQuestion = availableQuestions[x];
+//   //         var number = choice.dataset["number"];
+//   //         choice.innerText = currentQuestion["choice" + number];
+//   //       });
+//   //     }
+//   //   }
+//   // });
+// }
+
+// function startQuiz(currentQuestion) {
+//   answerChoicesEl.hidden = false;
+//   startBtn.hidden = true;
+//   instructions.hidden = true;
+//   questionEl.textContent = currentQuestion["question"];
+// }
+
+// function selectedAnswer() {
+//   var answer = currentQuestion["answer"];
+//   if (this.innerText === currentQuestion["choice" + answer]) {
+//     score++;
+//     console.log(score);
+//     next();
+//   } else if (this.innerText !== currentQuestion["choice" + answer]) {
+//   // console.log('Time Left before penalizing', timeLeft);
+//   timeLeft -= 10;
+//   // console.log('Time Left after penalizing', timeLeft);
+//     next();
+//   }
+// }
 // function showChoices(currentQuestion) {
-//   console.log(currentQuestion);
+//   // console.log(currentQuestion);
 //   for (let choice of choices) {
 //     var number = choice.dataset["number"];
 //     choice.innerText = currentQuestion["choice" + number];
 //     choice.addEventListener("click", selectedAnswer);
-//     function selectedAnswer() {
-//       var answer = currentQuestion["answer"];
-//       if (choice.innerText === currentQuestion["choice" + answer]) {
-//         score++;
-//         console.log(score);
-//         next();
-//       } else if (choice.innerText !== currentQuestion["choice" + answer]) {
-//         console.log('Time Left before penalizing', timeLeft);
-//         timeLeft -= 10;
-//         timerEl.textContent = "Time: " + timeLeft;
-//       console.log('Time Left after penalizing', timeLeft);
-//         next();
-//       }
-//     }
-    // choices.forEach((choice) => {
-    //   var number = choice.dataset["number"];
-    //   choice.innerText = currentQuestion["choice" + number];
-    // choice.addEventListener("click", selectedAnswer);
-    // function selectedAnswer() {
-    //   var answer = currentQuestion["answer"];
-    //   if (choice.innerText === currentQuestion["choice" + answer]) {
-    //     score = +10;
-    //     console.log(score);
-    //     choices.forEach((choice) => {
-    //       currentQuestion = availableQuestions[x];
-    //       var number = choice.dataset["number"];
-    //       choice.innerText = currentQuestion["choice" + number];
-    //     });
-    //   }
-    // }
-    // });
+
+//     // choices.forEach((choice) => {
+//     //   var number = choice.dataset["number"];
+//     //   choice.innerText = currentQuestion["choice" + number];
+//     // choice.addEventListener("click", selectedAnswer);
+//     // function selectedAnswer() {
+//     //   var answer = currentQuestion["answer"];
+//     //   if (choice.innerText === currentQuestion["choice" + answer]) {
+//     //     score = +10;
+//     //     console.log(score);
+//     //     choices.forEach((choice) => {
+//     //       currentQuestion = availableQuestions[x];
+//     //       var number = choice.dataset["number"];
+//     //       choice.innerText = currentQuestion["choice" + number];
+//     //     });
+//     //   }
+//     // }
+//     // });
 //   }
 // }
 
-// function userAnswer() {
-//   for (let choice of choices) {
-//     choice.addEventListener("click", selectedAnswer);
-//     function selectedAnswer() {
-//       var answer = currentQuestion["answer"];
-//       if (choice.innerText === currentQuestion["choice" + answer]) {
-//         score = +10;
-//         console.log(score);
-//       }
-//       // else if (choice.innerText !== currentQuestion["choice" + answer]) {
+// // function showChoices(currentQuestion) {
+// //   console.log(currentQuestion);
+// //   for (let choice of choices) {
+// //     var number = choice.dataset["number"];
+// //     choice.innerText = currentQuestion["choice" + number];
+// //     choice.addEventListener("click", selectedAnswer);
+// //     function selectedAnswer() {
+// //       var answer = currentQuestion["answer"];
+// //       if (choice.innerText === currentQuestion["choice" + answer]) {
+// //         score++;
+// //         console.log(score);
+// //         next();
+// //       } else if (choice.innerText !== currentQuestion["choice" + answer]) {
+// //         console.log('Time Left before penalizing', timeLeft);
+// //         timeLeft -= 10;
+// //         timerEl.textContent = "Time: " + timeLeft;
+// //       console.log('Time Left after penalizing', timeLeft);
+// //         next();
+// //       }
+// //     }
+//     // choices.forEach((choice) => {
+//     //   var number = choice.dataset["number"];
+//     //   choice.innerText = currentQuestion["choice" + number];
+//     // choice.addEventListener("click", selectedAnswer);
+//     // function selectedAnswer() {
+//     //   var answer = currentQuestion["answer"];
+//     //   if (choice.innerText === currentQuestion["choice" + answer]) {
+//     //     score = +10;
+//     //     console.log(score);
+//     //     choices.forEach((choice) => {
+//     //       currentQuestion = availableQuestions[x];
+//     //       var number = choice.dataset["number"];
+//     //       choice.innerText = currentQuestion["choice" + number];
+//     //     });
+//     //   }
+//     // }
+//     // });
+// //   }
+// // }
 
-//       // }
+// // function userAnswer() {
+// //   for (let choice of choices) {
+// //     choice.addEventListener("click", selectedAnswer);
+// //     function selectedAnswer() {
+// //       var answer = currentQuestion["answer"];
+// //       if (choice.innerText === currentQuestion["choice" + answer]) {
+// //         score = +10;
+// //         console.log(score);
+// //       }
+// //       // else if (choice.innerText !== currentQuestion["choice" + answer]) {
 
-//       next();
-//     }
+// //       // }
+
+// //       next();
+// //     }
+// //   }
+// // }
+
+// function next() {
+//   x++;
+//   var currentQuestion = {};
+//   var availableQuestions = [...questions];
+//   currentQuestion = availableQuestions[x];
+//   questionEl.textContent = currentQuestion["question"];
+//   if (currentQuestion == availableQuestions.length) {
+//     console.log("finished")
 //   }
-// }
-
-function next() {
-  x++;
-  var currentQuestion = {};
-  var availableQuestions = [...questions];
-  currentQuestion = availableQuestions[x];
-  console.log(currentQuestion);
-  questionEl.textContent = currentQuestion["question"];
-  showChoices(currentQuestion);
-}
-
-startBtn.addEventListener("click", timer);
-
-// choices.onclick = () => {
-// 	choices.forEach((choice) => {
-// 		if (choice.innerText === currentQuestion[ 'choice' + 'answer'] ) {
-// 			window.alert("It works!!")
-// 		}
+//   showChoices(currentQuestion)
+//   // console.log(currentQuestion);
+//   // if(x > 3) {
+//   //   // questionEl.textContent = currentQuestion["question"];
+//   //   // console.log(questionEl.innerText)
+//   //   console.log("home")
+//   //   // showChoices(currentQuestion);
+//   // } else {
+//   //   // console.log("home")
+//   //   showChoices(currentQuestion);
+//   // }
+//   // questionEl.textContent = currentQuestion["question"];
+//   // // console.log(questionEl.innerText)
+//   // showChoices(currentQuestion);
 
 // }
+
+// startBtn.addEventListener("click", timer);
+
+// // choices.onclick = () => {
+// // 	choices.forEach((choice) => {
+// // 		if (choice.innerText === currentQuestion[ 'choice' + 'answer'] ) {
+// // 			window.alert("It works!!")
+// // 		}
+
+// // }

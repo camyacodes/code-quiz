@@ -17,20 +17,20 @@
       </nav>
     </header>
     <h1 id="Question">Coding Quiz Challenge</h1>
-    <content id="answers">
-      <p id="instructions">
-        Try to answer the following code-related questions within the time
-        limit. Keep in mind that incorrect answers will penalize your score/time
-        by ten seconds! <br />
-      </p>
-      <section class="choices" hidden>
-        <button type="button" class="choice" data-number="1">Answer</button> <br />
-        <button type="button" class="choice" data-number="2">Answer</button> <br />
-        <button type="button" class="choice" data-number="3">Answer</button> <br />
-        <!-- <button type="button" class="chioce" data-number="4">Answer</button> <br /> -->
+      <section id="startPage">
+        <p id="instructions">
+          Try to answer the following code-related questions within the time
+          limit. Keep in mind that incorrect answers will penalize your score/time
+          by ten seconds! <br />
+        </p>
+        <button id="start-btn">Start Quiz</button>
       </section>
-    </content>
-    <button id="start-btn">Start Quiz</button>
+      <ul id="answers">
+        <li class="answerChoice"></li>
+        <li class="answerChoice"></li>
+        <li class="answerChoice"></li>
+        <li class="answerChoice"></li>
+      </ul>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
