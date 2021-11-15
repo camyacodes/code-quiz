@@ -24,6 +24,17 @@ nav li {
   list-style: none;
 }
 
+#view-scores {
+  font-size: 20px;
+  background-color: white;
+  border: none;
+  color: #b446b4;
+}
+
+#view-scores:hover {
+  opacity: 0.8;
+}
+
 #Question {
   margin-top: 60px;
 }
