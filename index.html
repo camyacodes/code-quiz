@@ -17,26 +17,25 @@
       </nav>
     </header>
     <h1 id="Question">Coding Quiz Challenge</h1>
-      <section id="startPage">
-        <p id="instructions">
-          Try to answer the following code-related questions within the time
-          limit. Keep in mind that incorrect answers will penalize your score/time
-          by ten seconds! <br />
-        </p>
-        <button id="start-btn">Start Quiz</button>
-      </section>
-      <ul id="answers">
-        <li class="answerChoice"></li>
-        <li class="answerChoice"></li>
-        <li class="answerChoice"></li>
-        <li class="answerChoice"></li>
-      </ul>
-      <form action="" id="scoreForm" hidden>
-        <h1 id="finalScore" ></h1>
-      <input type="text" placeholder="Enter initials">
-      <input type="submit" value="Submit">
-      </form>
-      
+    <section id="startPage">
+      <p id="instructions">
+        Try to answer the following code-related questions within the time
+        limit. Keep in mind that incorrect answers will penalize your score/time
+        by ten seconds! <br />
+      </p>
+      <button id="start-btn">Start Quiz</button>
+    </section>
+    <ul id="answers">
+      <li class="answerChoice" hidden></li>
+      <li class="answerChoice" hidden></li>
+      <li class="answerChoice" hidden></li>
+      <li class="answerChoice" hidden></li>
+    </ul>
+    <form action="" id="scoreForm" hidden>
+      <input type="text" placeholder="Enter initials" id="initials" /> <br />
+      <input type="submit" value="Submit" id="submit" />
+    </form>
+
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

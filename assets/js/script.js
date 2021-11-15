@@ -22,7 +22,7 @@ var questions = [
 ];
 
 //define global variables that can be used in all of the functions
-var timeLeft = 40;
+var timeLeft = 2000;
 var currPosition = 0;
 
 var app = {
@@ -81,6 +81,7 @@ var app = {
     questionEl.textContent = q.question;
     var choices = document.querySelectorAll(".answerChoice");
     choices.forEach(function (element, index) {
+      element.hidden = false;
       element.textContent = q.options[index];
     });
   },
