@@ -10,7 +10,7 @@ body {
 }
 
 nav {
-    padding: 20px;
+  padding: 20px;
 }
 
 nav ul {
@@ -29,10 +29,6 @@ nav li {
   background-color: white;
   border: none;
   color: #b446b4;
-}
-
-#view-scores:hover {
-  opacity: 0.8;
 }
 
 #Question {
@@ -62,7 +58,10 @@ nav li {
 }
 
 #start-btn:hover,
-.answerChoice:hover, #submit:hover {
+.answerChoice:hover,
+#submit:hover,
+#view-scores:hover,
+#homebtn:hover {
   opacity: 0.8;
 }
 
@@ -73,8 +72,13 @@ nav li {
 .answerChoice {
   margin: auto;
   margin-bottom: 20px;
-  max-width: 150px;
-  font-size: 40px;
+  padding-left: 10px;
+  padding-top: 15px;
+  padding-bottom: -10px;
+  max-width: 300px;
+  height: 60px;
+  font-size: 27px;
+  text-align: justify;
   background-color: #4682b4;
   list-style: none;
   border-radius: 5px;
@@ -100,5 +104,31 @@ form {
   background-color: #4682b4;
   border-radius: 10px;
   border-width: 1px;
+  color: white;
+}
+
+#homebtn {
+  width: 97px;
+  height: 36px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #5746b4;
+  border-radius: 6px;
+  border-width: 1px;
+  color: white;
+}
+
+#HighScoresList {
+  margin: 20px 0;
+  margin: auto;
+}
+
+.high-score {
+  margin: 20px auto;
+  font-size: 30px;
+  max-width: 150px;
+  background-color: #5746b4;
+  list-style: none;
+  border-radius: 3px;
   color: white;
 }

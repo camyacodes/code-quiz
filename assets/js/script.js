@@ -3,20 +3,16 @@ var saveScoreBtn = document.getElementById("submit");
 var username = document.getElementById("username");
 var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 var highScoresList = document.getElementById("HighScoresList");
-var score = {
-  score: mostRecentScore,
-  name: username.value,
-};
+
 
 
 saveHighScore = (e) => {
   e.preventDefault();
-  console.log("we did it");
 
-  // const score = {
-  //   score: mostRecentScore,
-  //   name: username.value,
-  // };
+  const score = {
+    score: mostRecentScore,
+    name: username.value,
+  };
   console.log(score);
   highScores.push(score);
   highScores.sort((a, b) => b.score - a.score);
@@ -46,26 +42,52 @@ viewScores = (e) => {
 
 var questions = [
   {
-    question: "What is 10/2?",
-    options: ["3", "5", "115", "0"],
-    answer: 0,
+    question: "Commonly used data types do NOT include:",
+    options: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
+    answer: 2,
   },
   {
-    question: "What is 20/2?",
-    options: ["3", "5", "115", "0"],
-    answer: 0,
+    question: "The condition in an if/else statement is enclosed with _______.",
+    options: ["1. qoutes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
+    answer: 2,
   },
   {
-    question: "What is 10/1?",
-    options: ["3", "5", "115", "0"],
-    answer: 0,
+    question: "Arrays in JavaScript can be used to store _______.",
+    options: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
+    answer: 3,
   },
   {
-    question: "What is 3/1?",
-    options: ["3", "5", "115", "0"],
-    answer: 0,
+    question: "String values must be enclosed within _______ when being assigned to variables",
+    options: ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
+    answer: 2,
   },
 ];
+
+
+// var questions = [
+//   {
+//     question: "What is 10/2?",
+//     options: ["3", "5", "115", "0"],
+//     answer: 0,
+//   },
+//   {
+//     question: "What is 20/2?",
+//     options: ["3", "5", "115", "0"],
+//     answer: 0,
+//   },
+//   {
+//     question: "What is 10/1?",
+//     options: ["3", "5", "115", "0"],
+//     answer: 0,
+//   },
+//   {
+//     question: "What is 3/1?",
+//     options: ["3", "5", "115", "0"],
+//     answer: 0,
+//   },
+// ];
+
+
 
 //define global variables that can be used in all of the functions
 var timeLeft = 2000;
