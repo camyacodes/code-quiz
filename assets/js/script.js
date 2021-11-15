@@ -1,4 +1,3 @@
-
 var questions = [
   {
     question: "What is 10/2?",
@@ -22,13 +21,14 @@ var questions = [
   },
 ];
 
-var timeLeft = 75;
+//define global variables that can be used in all of the functions
+var timeLeft = 40;
+var currPosition = 0;
 
 var app = {
   //this is the starting function that sets the variables and order of the other functions
   start: function () {
-    //set first question and score to 0
-    this.currPosition = 0;
+    //set score to 0
     this.score = 0;
     //target start button in html
     var startBtn = document.getElementById("start-btn");
@@ -38,52 +38,80 @@ var app = {
       startPg.hidden = true;
       //start the timer
       this.timer();
-    // show first question
-    this.showQuestion(questions[this.currPosition])
+      // call show first question function
+      this.showQuestion(questions[currPosition]);
     });
-
 
     //get choices
     var choices = document.querySelectorAll(".answerChoice");
-    //check if the choice that's clicked is the right answer
+    //for each choice listen for a click
     choices.forEach((element, index) => {
       element.addEventListener("click", () => {
+        //call check answer function when an  answer is clicked
         this.checkAnswer(index);
       });
     });
   },
 
-    //defining timer function
-    timer:  function () {
-      
-      var timerEl = document.getElementById("timer");
-      var timeInterval = setInterval(function () {
-        if (timeLeft > 0) {
-          timerEl.textContent = "Time: " + timeLeft;
-          timeLeft--;
-        } else {
-          timerEl.textContent = "0";
-          clearInterval(timeInterval);
-        }
-      }, 1000);
-    },
-//function that dynamicall changes html to show question on the webpage
+  //defining timer function
+  timer: () => {
+    //get html element that displays timer on the webpage
+    var timerEl = document.getElementById("timer");
+    //set interval will repeat the following function every second
+    var timeInterval = setInterval(function () {
+      //if there is still time left, decrease by 1 sec
+      if (timeLeft > 0) {
+        timerEl.textContent = "Time: " + timeLeft;
+        timeLeft--;
+      } else if (currPosition == questions.length) {
+        timerEl.textContent = "Finished early";
+        clearInterval(timeInterval);
+      } else if (timeLeft === 0) {
+        //if time is out, stop time interval
+        timerEl.textContent = "Time's Up!";
+        clearInterval(timeInterval);
+        app.results()
+      }
+    }, 1000);
+  },
+  //function that dynamically changes html to show question on the webpage
   showQuestion: function (q) {
+    //target question h1 element
     var questionEl = document.getElementById("Question");
     questionEl.textContent = q.question;
     var choices = document.querySelectorAll(".answerChoice");
-    choices.forEach(function(element,index){
+    choices.forEach(function (element, index) {
       element.textContent = q.options[index];
-    })
+    });
   },
-  checkAnswer: function(userAnswer){
-    var currentQuestion = questions[this.currPosition];
+  checkAnswer: function (userAnswer) {
+    var currentQuestion = questions[currPosition];
     if (currentQuestion.answer == userAnswer) {
       this.score += 1;
-      console.log(this.score)
+      console.log(this.score);
     } else {
       timeLeft -= 10;
     }
+    this.nextQuestion();
+
+    this.showQuestion(questions[currPosition]);
+  },
+
+  nextQuestion: function () {
+    currPosition++;
+    if (currPosition == questions.length) {
+      timeLeft = 0;
+      this.results();
+    }
+  },
+
+  results: function() {
+    var answerContainer = document.getElementById("answers");
+    answerContainer.hidden = true;
+    var questionEl = document.getElementById("Question");
+    questionEl.textContent = "Final Score: " + this.score;
+    var scoreForm = document.getElementById("scoreForm")
+    scoreForm.hidden = false;
   },
 };
 app.start();
