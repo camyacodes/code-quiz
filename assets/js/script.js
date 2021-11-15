@@ -2,22 +2,46 @@ var mostRecentScore = localStorage.getItem("mostRecentScore");
 var saveScoreBtn = document.getElementById("submit");
 var username = document.getElementById("username");
 var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+var highScoresList = document.getElementById("HighScoresList");
+var score = {
+  score: mostRecentScore,
+  name: username.value,
+};
+
 
 saveHighScore = (e) => {
   e.preventDefault();
   console.log("we did it");
 
-  const score = {
-    score: mostRecentScore,
-    name: username.value,
-  };
-  console.log(score)
+  // const score = {
+  //   score: mostRecentScore,
+  //   name: username.value,
+  // };
+  console.log(score);
   highScores.push(score);
   highScores.sort((a, b) => b.score - a.score);
   highScores.splice(5);
 
   localStorage.setItem("highScores", JSON.stringify(highScores));
   window.location.assign("/");
+};
+
+viewScores = (e) => {
+  e.preventDefault();
+  var questionEl = document.getElementById("Question");
+  questionEl.textContent = "High Scores";
+  var mainContent = document.getElementById("main-content");
+  mainContent.hidden = true;
+  highScoresList.innerHTML = 
+  highScores.map((score) => {
+      return `<li class="high-score">${score.name} - ${score.score}</li>`;
+    })
+    .join("");
+    var homeBtn = document.getElementById("homebtn")
+    homeBtn.hidden = false;
+    homeBtn.addEventListener('click', function(){
+      window.location.assign("/");
+    })
 };
 
 var questions = [

@@ -11,37 +11,41 @@
     <header>
       <nav>
         <ul>
-          <li>View high scores</li>
+          <li onclick="viewScores(event)"><button>View high scores</button></li>
           <li id="timer"></li>
         </ul>
       </nav>
     </header>
     <h1 id="Question">Coding Quiz Challenge</h1>
-    <section id="startPage">
-      <p id="instructions">
-        Try to answer the following code-related questions within the time
-        limit. Keep in mind that incorrect answers will penalize your score/time
-        by ten seconds! <br />
-      </p>
-      <button id="start-btn">Start Quiz</button>
-    </section>
-    <ul id="answers">
-      <li class="answerChoice" hidden></li>
-      <li class="answerChoice" hidden></li>
-      <li class="answerChoice" hidden></li>
-      <li class="answerChoice" hidden></li>
+    <ul id="HighScoresList">
     </ul>
-    <form id="scoreForm" hidden>
-      <input
-        type="text"
-        placeholder="Enter name"
-        name="username"
-        id="username"
-      />
-      <br />
-      <button type="submit" id="submit" onclick="saveHighScore(event)">Submit</button>
-    </form>
-
+    <button id="homebtn" hidden>Home</button>
+    <main id="main-content">
+      <section id="startPage">
+        <p id="instructions">
+          Try to answer the following code-related questions within the time
+          limit. Keep in mind that incorrect answers will penalize your score/time
+          by ten seconds! <br />
+        </p>
+        <button id="start-btn">Start Quiz</button>
+      </section>
+      <ul id="answers">
+        <li class="answerChoice" hidden></li>
+        <li class="answerChoice" hidden></li>
+        <li class="answerChoice" hidden></li>
+        <li class="answerChoice" hidden></li>
+      </ul>
+      <form id="scoreForm" hidden>
+        <input
+          type="text"
+          placeholder="Enter name"
+          name="username"
+          id="username"
+        />
+        <br />
+        <button type="submit" id="submit" onclick="saveHighScore(event)">Submit</button>
+      </form>
+    </main>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
