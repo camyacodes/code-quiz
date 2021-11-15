@@ -19,7 +19,7 @@ saveHighScore = (e) => {
   highScores.splice(5);
 
   localStorage.setItem("highScores", JSON.stringify(highScores));
-  window.location.assign("/");
+  window.location.assign("https://camyacodes.github.io/code-quiz/");
 };
 
 viewScores = (e) => {
@@ -36,7 +36,7 @@ viewScores = (e) => {
     var homeBtn = document.getElementById("homebtn")
     homeBtn.hidden = false;
     homeBtn.addEventListener('click', function(){
-      window.location.assign("https://camyacodes.github.io/code-quiz/");
+      window.location.assign('www.google.com');
     })
 };
 
