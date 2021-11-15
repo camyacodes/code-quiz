@@ -1,3 +1,25 @@
+var mostRecentScore = localStorage.getItem("mostRecentScore");
+var saveScoreBtn = document.getElementById("submit");
+var username = document.getElementById("username");
+var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+saveHighScore = (e) => {
+  e.preventDefault();
+  console.log("we did it");
+
+  const score = {
+    score: mostRecentScore,
+    name: username.value,
+  };
+  console.log(score)
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(5);
+
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  window.location.assign("/");
+};
+
 var questions = [
   {
     question: "What is 10/2?",
@@ -64,13 +86,13 @@ var app = {
         timerEl.textContent = "Time: " + timeLeft;
         timeLeft--;
       } else if (currPosition == questions.length) {
-        timerEl.textContent = "Finished early";
+        timerEl.textContent = "All done!";
         clearInterval(timeInterval);
       } else if (timeLeft === 0) {
         //if time is out, stop time interval
         timerEl.textContent = "Time's Up!";
         clearInterval(timeInterval);
-        app.results()
+        app.results();
       }
     }, 1000);
   },
@@ -106,16 +128,18 @@ var app = {
     }
   },
 
-  results: function() {
+  results: function () {
     var answerContainer = document.getElementById("answers");
     answerContainer.hidden = true;
     var questionEl = document.getElementById("Question");
-    questionEl.textContent = "Final Score: " + this.score;
-    var scoreForm = document.getElementById("scoreForm")
+    questionEl.textContent = "Final Score: " + mostRecentScore;
+    localStorage.setItem("mostRecentScore", this.score);
+    var scoreForm = document.getElementById("scoreForm");
     scoreForm.hidden = false;
   },
 };
 app.start();
+
 // let x = 0;
 // var currentQuestion = {};
 // var availableQuestions = [...questions];

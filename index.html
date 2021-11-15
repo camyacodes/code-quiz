@@ -31,9 +31,15 @@
       <li class="answerChoice" hidden></li>
       <li class="answerChoice" hidden></li>
     </ul>
-    <form action="" id="scoreForm" hidden>
-      <input type="text" placeholder="Enter initials" id="initials" /> <br />
-      <input type="submit" value="Submit" id="submit" />
+    <form id="scoreForm" hidden>
+      <input
+        type="text"
+        placeholder="Enter name"
+        name="username"
+        id="username"
+      />
+      <br />
+      <button type="submit" id="submit" onclick="saveHighScore(event)">Submit</button>
     </form>
 
     <script src="./assets/js/script.js"></script>

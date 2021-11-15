@@ -6,11 +6,15 @@
 
 body {
   text-align: center;
+  box-sizing: border-box;
+}
+
+nav {
+    padding: 20px;
 }
 
 nav ul {
   width: 100%;
-  padding-top: 10px;
   font-size: 20px;
   display: flex;
   justify-content: space-between;
@@ -70,7 +74,7 @@ form {
   margin-top: 30px;
 }
 
-#initials {
+#username {
   margin-bottom: 20px;
   height: 36 px;
   width: 188 px;
