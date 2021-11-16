@@ -52,7 +52,7 @@ var questions = [
       "3. curly brackets",
       "4. square brackets",
     ],
-    answer: 3,
+    answer: 1,
   },
   {
     question: "Arrays in JavaScript can be used to store _______.",
